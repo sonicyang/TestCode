@@ -3,6 +3,19 @@ var http = require('http');
 var express = require('express');
 var app = express();
 var server = http.createServer(app);
+function checkCode(data){
+    var sp   = data.split("\n");
+    var reg1 = /import[\s\t]/;
+    var reg2 = /(\s|\t)(math)(\s|\t|.)/;
+    for (key in sp){
+    	if (reg1.test(sp[key])){
+	    if(!reg2.test(sp[key])){
+		return false;		
+	    }
+	}
+    }	    
+    return true;		
+}
 app.configure(function() {
     app.use(express.bodyParser());
     app.use(app.router);
@@ -10,7 +23,6 @@ app.configure(function() {
 });
 
 app.get('/',function(request, response){
-    //response.end('你好！');
     fs.createReadStream('./index.html').pipe(response); 
 });
 app.post('/index',function(request, response){
