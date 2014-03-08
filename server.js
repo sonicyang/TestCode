@@ -3,7 +3,6 @@ var http = require('http');
 var express = require('express');
 var app = express();
 var server = http.createServer(app);
-
 app.configure(function() {
     app.use(express.bodyParser());
     app.use(app.router);
