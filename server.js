@@ -14,11 +14,18 @@ app.get('/',function(request, response){
     fs.createReadStream('./index.html').pipe(response); 
 });
 app.post('/index',function(request, response){
-    console.log(request.param("ctx"));
-    //fs.writeFile('message.txt', request., function (err) {
-    //    if (err) throw err;
-    //    response.end("Saved");
-    //    });
+    fs.writeFile('in.py', request.param("ctx"), function (err) {
+        if (err) throw err;
+
+        var result = "";
+        var exec = require('child_process').exec;
+        exec('c:\\Python33\\python.exe in.py', function callback(error, stdout, stderr){
+            result = stdout;    
+        });
+
+        
+        response.end(result);
+        });
 //	console.log(request.body.test.ctx);
 });
 server.listen(8080,'127.0.0.1',function(){
