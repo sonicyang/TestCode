@@ -1,14 +1,18 @@
 var http = require('http');
+var fs = require('fs');
 var express = require('express');
 var app = express();
 var server = http.createServer(app);
+app.use(express.json());
+app.use(express.urlencoded());
 app.get('/',function(request, response){
-	response.end('你好！');
+	fs.createReadStream('./index.html').pipe(response);
 });
-app.get('/index',function(request, response){
-  	response.end("ss");
-//	console.log(request.body.test.ctx);
+app.post('/index',function(request, response){
+  	
+	console.log(request.body.ctx);
+	response.end();
 });
 server.listen(8080,'127.0.0.1',function(){
-	console.log('Server Running');
+	console.log('Server running');
 });

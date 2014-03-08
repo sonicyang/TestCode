@@ -6,9 +6,7 @@
 			function submitCode(){
 				var test={}
 				test.ctx = $("#test").val();
-				$.post("/index", test, function (data){
-					alert(test);
-				});
+				$.post("/index", test, "json");
 			}
 		</script>
 
