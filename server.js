@@ -21,9 +21,12 @@ app.configure(function() {
     app.use(app.router);
     app.use(express.logger());
 });
-
 app.get('/',function(request, response){
     fs.createReadStream('./index.html').pipe(response); 
+});
+
+app.get('/jquery',function(request, response){
+    fs.createReadStream('./static/jQuery/jquery-1.11.0.min.js').pipe(response);
 });
 app.post('/index',function(request, response){
     fs.writeFile('in.py', request.param("ctx"), function (err) {
