@@ -1,13 +1,13 @@
 <!Doctype html>
 <html>
 	<head>
-		<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
-		<script type="text/javascript">
+        <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+        <script type="text/javascript">
 			function submitCode(){
 				var test={}
 				test.ctx = $("#test").val();
 				$.post("/index", test, function (data){
-					alert(test);
+					console.log(data);
 				});
 			}
 		</script>
