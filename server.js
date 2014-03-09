@@ -35,7 +35,11 @@ app.post('/index',function(request, response){
         var result = "";
         var exec = require('child_process').exec;
         exec('python3 in.py', function callback(error, stdout, stderr){
+            sys.puts("Python STDOUT:");
             sys.puts(stdout);    
+            sys.puts("Python STDERR:");
+            sys.puts(stderr);    
+
         });
 
         
