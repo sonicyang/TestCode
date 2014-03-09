@@ -2,14 +2,14 @@
 <html>
 	<head>
 		<style type="text/css">
-			#test{
+			#input{
 				display:block;
 				height:300px;
 				width:500px;
 			}
-			#test{
+			#output{
 				display:block;
-				height:300px;
+				height:200px;
 				width:500px;
 			}
 		</style>	
@@ -17,7 +17,7 @@
        	 	<script type="text/javascript">
 			function submitCode(){
 				var test={}
-				test.ctx = $("#test").val();
+				test.ctx = $("#input").val();
 				$.post("/index", test, function (data){
                     console.log(data);
 					$("#output").html(data);
@@ -27,7 +27,7 @@
 
 	</head>
 	<body>
-		<textarea id="test"></textarea>
+		<textarea id="input"></textarea>
 		<input type="button" value="submit" onclick="submitCode()"></input>        <br/><textarea id="output"></textarea>
 	</body>
 </html>
