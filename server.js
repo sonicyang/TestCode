@@ -28,13 +28,15 @@ app.get('/',function(request, response){
 app.get('/jquery',function(request, response){
     fs.createReadStream('./static/jQuery/jquery-1.11.0.min.js').pipe(response);
 });
+
+var filenum = 0;
 app.post('/index',function(request, response){
-    fs.writeFile('in.py', request.param("ctx"), function (err) {
+    fs.writeFile('uploaded/' + (filenum).toString() + '.py', request.param("ctx"), function (err) {
         if (err) throw err;
 	var sys = require('sys');
         var result = "";
         var exec = require('child_process').exec;
-        exec('python3 in.py', function callback(error, stdout, stderr){
+        exec('python3 uploaded/' + filenum.toString() + '.py', function callback(error, stdout, stderr){
             sys.puts("Python STDOUT:");
             sys.puts(stdout);    
             sys.puts("Python STDERR:");
@@ -42,6 +44,11 @@ app.post('/index',function(request, response){
             result = stdout.toString() + stderr.toString();
             sys.puts(result);
             response.end(result);
+
+            fs.unlink('uploaded/' + (filenum++).toString() + '.py', function (err) {
+                if (err) throw err;
+                console.log('successfully deleted ' + 'uploaded/' + (filenum -1).toString() + '.py');
+                });
             });
         });
 //	console.log(request.body.test.ctx);
