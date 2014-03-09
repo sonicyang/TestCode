@@ -1,2 +1,2 @@
-print("asdf");
-asdf
+a = 1
+print (a)
