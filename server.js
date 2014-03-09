@@ -31,11 +31,11 @@ app.get('/jquery',function(request, response){
 app.post('/index',function(request, response){
     fs.writeFile('in.py', request.param("ctx"), function (err) {
         if (err) throw err;
-
+	var sys = require('sys');
         var result = "";
         var exec = require('child_process').exec;
         exec('python3 in.py', function callback(error, stdout, stderr){
-            result = stdout;    
+            sys.puts(stdout);    
         });
 
         
