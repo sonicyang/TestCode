@@ -34,7 +34,7 @@ app.post('/index',function(request, response){
 
         var result = "";
         var exec = require('child_process').exec;
-        exec('c:\\Python33\\python.exe in.py', function callback(error, stdout, stderr){
+        exec('python3 in.py', function callback(error, stdout, stderr){
             result = stdout;    
         });
 
