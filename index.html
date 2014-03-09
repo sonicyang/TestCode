@@ -1,15 +1,15 @@
 <!Doctype html>
 <html>
 	<head>
-	<style type="text/css">
-		#test{
-			display:block;
-			height:1000px;
-			background-color:red;
-		}
-	</style>	
-        <script src="/jquery"></script>
-        <script type="text/javascript">
+		<style type="text/css">
+			#test{
+				display:block;
+				height:300px;
+				width:500px;
+			}
+		</style>	
+	       	<script src="/jquery"></script>
+       	 	<script type="text/javascript">
 			function submitCode(){
 				var test={}
 				test.ctx = $("#test").val();
@@ -22,6 +22,6 @@
 	</head>
 	<body>
 		<textarea id="test"  ></textarea>
-		<input type="button" value="s" onclick="submitCode()"></input>
+		<input type="button" value="submit" onclick="submitCode()"></input>
 	</body>
 </html>
