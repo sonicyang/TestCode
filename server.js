@@ -41,8 +41,8 @@ app.post('/index',function(request, response){
             sys.puts(stderr);    
             result = stdout.toString() + stderr.toString();
             sys.puts(result);
+            response.end(result);
             });
-        response.end(result);
         });
 //	console.log(request.body.test.ctx);
 });

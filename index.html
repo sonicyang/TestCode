@@ -7,6 +7,11 @@
 				height:300px;
 				width:500px;
 			}
+			#test{
+				display:block;
+				height:300px;
+				width:500px;
+			}
 		</style>	
 	       	<script src="/jquery"></script>
        	 	<script type="text/javascript">
@@ -15,7 +20,7 @@
 				test.ctx = $("#test").val();
 				$.post("/index", test, function (data){
                     console.log(data);
-					$("output").html(data);
+					$("#output").html(data);
 				});
 			}
 		</script>
@@ -23,7 +28,6 @@
 	</head>
 	<body>
 		<textarea id="test"></textarea>
-		<input type="button" value="submit" onclick="submitCode()"></input>
-		<textarea id="output"></textarea>
+		<input type="button" value="submit" onclick="submitCode()"></input>        <br/><textarea id="output"></textarea>
 	</body>
 </html>
