@@ -39,37 +39,35 @@ app.get('/jquery',function(request, response){
 
 
 function execCode(CC, code){
-    var cc_hash = crypto.createHash('md5').update(CC).digest('hex');
     var code_hash = crypto.createHash('md5').update(code).digest('hex');
     
-    fs.writeFileSync('uploaded/' + cc_hash.toString() + "/" + code_hash.toString(), code);
+    fs.writeFileSync('uploaded/' + CC + "/" + code_hash.toString(), code);
 
-    var result = exec(CC + ' uploaded/' + cc_hash.toString() + "/" + code_hash.toString(),{silent:true}).output;
+    var result = exec(CC + ' uploaded/' + CC + "/" + code_hash.toString(),{silent:true}).output;
     
-    sys.puts("\nExecuted Uploaded " +  cc_hash.toString() + "/" + code_hash.toString());
+    sys.puts("\nExecuted Uploaded " + CC + "/" + code_hash.toString());
     sys.puts("Output:");
     sys.puts(result);    
 
-    fs.unlinkSync('uploaded/' + cc_hash.toString() + "/" + code_hash.toString());
-    console.log('successfully deleted ' + 'uploaded/' + cc_hash.toString() + "/" + code_hash.toString());
+    fs.unlinkSync('uploaded/' + CC + "/" + code_hash.toString());
+    console.log('successfully deleted ' + 'uploaded/' + CC + "/" + code_hash.toString());
 
     return result;
 }
 
 function execStandardCode(CC, name){
-    var cc_hash = crypto.createHash('md5').update(CC).digest('hex');
     var name_hash = crypto.createHash('md5').update(name).digest('hex');
     
-    var result = exec(CC + ' standard/' + cc_hash.toString() + "/" + name_hash.toString(),{silent:true}).output;
+    var result = exec(CC + ' standard/' + CC + "/" + name_hash.toString(),{silent:true}).output;
     
-    sys.puts("\nExecuted Standard " +  cc_hash.toString() + "/" + name_hash.toString());
+    sys.puts("\nExecuted Standard " + CC + "/" + name_hash.toString());
     sys.puts("Output:");
     sys.puts(result);    
 
     return result;
 }
 app.post('/index',function(request, response){
-    var ulo = execCode('Python', request.param("ctx"))
+    var ulo = execCode('python', request.param("ctx"))
     var stdo = execStandardCode('Python', "0000");
     
     var ulo_hash = crypto.createHash('md5').update(ulo).digest('hex');
