@@ -46,7 +46,7 @@ function execCode(CC, code){
 
     var result = exec(CC + ' uploaded/' + cc_hash.toString() + "/" + code_hash.toString(),{silent:true}).output;
     
-    sys.puts("\nExecuted " +  cc_hash.toString() + "/" + code_hash.toString());
+    sys.puts("\nExecuted Uploaded " +  cc_hash.toString() + "/" + code_hash.toString());
     sys.puts("Output:");
     sys.puts(result);    
 
@@ -56,8 +56,31 @@ function execCode(CC, code){
     return result;
 }
 
+function execStandardCode(CC, name){
+    var cc_hash = crypto.createHash('md5').update(CC).digest('hex');
+    var name_hash = crypto.createHash('md5').update(name).digest('hex');
+    
+    var result = exec(CC + ' standard/' + cc_hash.toString() + "/" + name_hash.toString(),{silent:true}).output;
+    
+    sys.puts("\nExecuted Standard " +  cc_hash.toString() + "/" + name_hash.toString());
+    sys.puts("Output:");
+    sys.puts(result);    
+
+    return result;
+}
 app.post('/index',function(request, response){
-    response.end(execCode('Python', request.param("ctx")));
+    var ulo = execCode('Python', request.param("ctx"))
+    var stdo = execStandardCode('Python', "0000");
+    
+    var ulo_hash = crypto.createHash('md5').update(ulo).digest('hex');
+    var stdo_hash = crypto.createHash('md5').update(stdo).digest('hex');
+    fs.writeFileSync('compare/' + ulo_hash.toString(), ulo);
+    fs.writeFileSync('compare/' + stdo_hash.toString(), stdo);
+
+    var diffR = exec("diff " + "compare/" + ulo_hash.toString() + " " + "compare/" + stdo_hash.toString()).output;
+
+    //if(diffR == "")
+    response.end(diffR);
     //	console.log(request.body.test.ctx);
 });
 server.listen(8080,'127.0.0.1',function(){
