@@ -45,19 +45,19 @@ function execCode(CC, code){
     fs.writeFileSync('uploaded/' + cc_hash.toString() + "/" + code_hash.toString(), code);
 
     var result = exec(CC + ' uploaded/' + cc_hash.toString() + "/" + code_hash.toString(),{silent:true}).output;
-
-    sys.puts("Executed " +  cc_hash.toString() + "/" + code_hash.toString());
+    
+    sys.puts("\nExecuted " +  cc_hash.toString() + "/" + code_hash.toString());
     sys.puts("Output:");
     sys.puts(result);    
 
     fs.unlinkSync('uploaded/' + cc_hash.toString() + "/" + code_hash.toString());
     console.log('successfully deleted ' + 'uploaded/' + cc_hash.toString() + "/" + code_hash.toString());
 
-
+    return result;
 }
 
 app.post('/index',function(request, response){
-    execCode('Python', request.param("ctx"));
+    response.end(execCode('Python', request.param("ctx")));
     //	console.log(request.body.test.ctx);
 });
 server.listen(8080,'127.0.0.1',function(){
