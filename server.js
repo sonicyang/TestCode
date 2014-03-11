@@ -8,7 +8,7 @@ var express = require('express');
 var app = express();
 var server = http.createServer(app);
 
-app.use("/a", express.static(__dirname + '/static'));
+app.use("/static", express.static(__dirname + '/static'));
 app.configure(function() {
     app.use(express.bodyParser());
     app.use(app.router);
