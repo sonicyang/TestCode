@@ -15,6 +15,19 @@ app.configure(function() {
     app.use(express.logger());
 });
 
+// Make Directorys
+if(!fs.existsSync('/tmp/TestCode')){
+    fs.mkdirSync('/tmp/TestCode');
+}
+
+if(!fs.existsSync('/tmp/TestCode/Uploaded')){
+    fs.mkdirSync('/tmp/TestCode/Uploaded');
+}
+
+if(!fs.existsSync('/tmp/TestCode/Compare')){
+    fs.mkdirSync('/tmp/TestCode/Compare');
+}
+
 function checkCode(data){
     var sp   = data.split("\n");
     var reg1 = /import[\s\t]/;
@@ -41,17 +54,21 @@ app.get('/jquery',function(request, response){
 
 function execCode(CC, code){
     var code_hash = crypto.createHash('md5').update(code).digest('hex');
+ 
+    if(!fs.existsSync('/tmp/TestCode/Uploaded/' + CC))
+        fs.mkdirSync('/tmp/TestCode/Uploaded/' + CC);
     
-    fs.writeFileSync('uploaded/' + CC + "/" + code_hash.toString(), code);
 
-    var result = exec(CC + ' uploaded/' + CC + "/" + code_hash.toString(),{silent:true}).output;
+    fs.writeFileSync('/tmp/TestCode/Uploaded/' + CC + "/" + code_hash.toString(), code);
+
+    var result = exec(CC + ' /tmp/TestCode/Uploaded/' + CC + "/" + code_hash.toString(),{silent:true}).output;
     
     sys.puts("\nExecuted Uploaded " + CC + "/" + code_hash.toString());
     sys.puts("Output:");
     sys.puts(result);    
 
-    fs.unlinkSync('uploaded/' + CC + "/" + code_hash.toString());
-    console.log('successfully deleted ' + 'uploaded/' + CC + "/" + code_hash.toString());
+    fs.unlinkSync('/tmp/TestCode/Uploaded/' + CC + "/" + code_hash.toString());
+    console.log('successfully deleted ' + 'Uploaded/' + CC + "/" + code_hash.toString());
 
     return result;
 }
@@ -69,15 +86,17 @@ function execStandardCode(CC, name){
 }
 app.post('/index',function(request, response){
     var ulo = execCode('python', request.param("ctx"))
-    var stdo = execStandardCode('Python', "0000");
+    var stdo = execStandardCode('python', "0000");
     
     var ulo_hash = crypto.createHash('md5').update(ulo).digest('hex');
     var stdo_hash = crypto.createHash('md5').update(stdo).digest('hex');
-    fs.writeFileSync('compare/' + ulo_hash.toString(), ulo);
-    fs.writeFileSync('compare/' + stdo_hash.toString(), stdo);
+    fs.writeFileSync('/tmp/TestCode/Compare/' + ulo_hash.toString(), ulo);
+    fs.writeFileSync('/tmp/TestCode/Compare/' + stdo_hash.toString(), stdo);
 
-    var diffR = exec("diff " + "compare/" + ulo_hash.toString() + " " + "compare/" + stdo_hash.toString()).output;
+    var diffR = exec("diff " + "/tmp/TestCode/Compare/" + ulo_hash.toString() + " " + "/tmp/TestCode/Compare/" + stdo_hash.toString()).output;
 
+    fs.unlinkSync('/tmp/TestCode/Compare/' + ulo_hash.toString());
+    fs.unlinkSync('/tmp/TestCode/Compare/' + stdo_hash.toString());
     //if(diffR == "")
     response.end(diffR);
     //	console.log(request.body.test.ctx);
