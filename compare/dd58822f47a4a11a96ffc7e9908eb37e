@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "uploaded/python/d655b745c87f3be8620e8a58cb6ee9b9", line 2, in <module>
+    os.syetem("ls")
+AttributeError: 'module' object has no attribute 'syetem'

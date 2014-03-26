@@ -31,7 +31,7 @@ if(!fs.existsSync('/tmp/TestCode/Compare')){
 function checkCode(data){
     var sp   = data.split("\n");
     var reg1 = /import[\s\t]/;
-    var reg2 = /(\s|\t)(math)(\s|\t|.)/;
+    var reg2 = /(\s|\t)(math)(\s|\t|.)*/;
     for (key in sp){
     	if (reg1.test(sp[key])){
 	    if(!reg2.test(sp[key])){
