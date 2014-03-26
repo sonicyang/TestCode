@@ -84,23 +84,28 @@ function execStandardCode(CC, name){
 
     return result;
 }
+
 app.post('/index',function(request, response){
     var ulo = execCode('python', request.param("ctx"))
     var stdo = execStandardCode('python', "0000");
     
     var ulo_hash = crypto.createHash('md5').update(ulo).digest('hex');
     var stdo_hash = crypto.createHash('md5').update(stdo).digest('hex');
-    fs.writeFileSync('/tmp/TestCode/Compare/' + ulo_hash.toString(), ulo);
-    fs.writeFileSync('/tmp/TestCode/Compare/' + stdo_hash.toString(), stdo);
+    fs.writeFileSync('/tmp/TestCode/Compare/' + ulo_hash.toString()+"ul", ulo);
+    fs.writeFileSync('/tmp/TestCode/Compare/' + stdo_hash.toString()+"std", stdo);
 
-    var diffR = exec("diff " + "/tmp/TestCode/Compare/" + ulo_hash.toString() + " " + "/tmp/TestCode/Compare/" + stdo_hash.toString()).output;
+    var diffR = exec("diff " + "/tmp/TestCode/Compare/" + ulo_hash.toString() + "ul" + " " + "/tmp/TestCode/Compare/" + stdo_hash.toString() + "std").output;
 
-    fs.unlinkSync('/tmp/TestCode/Compare/' + ulo_hash.toString());
-    fs.unlinkSync('/tmp/TestCode/Compare/' + stdo_hash.toString());
-    //if(diffR == "")
-    response.end(diffR);
-    //	console.log(request.body.test.ctx);
+    fs.unlinkSync('/tmp/TestCode/Compare/' + ulo_hash.toString() + "ul");
+    fs.unlinkSync('/tmp/TestCode/Compare/' + stdo_hash.toString() + "std");
+
+
+    if(diffR == "")
+        response.end("AC");
+    else
+        response.end("WA");
 });
+
 server.listen(8080,'127.0.0.1',function(){
     console.log('Server Running');
 });
