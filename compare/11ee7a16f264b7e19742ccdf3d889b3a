@@ -1,4 +1,0 @@
-Traceback (most recent call last):
-  File "uploaded/python/d848e41aed43e966bddbfb9126561df5", line 1, in <module>
-    sdlfk
-NameError: name 'sdlfk' is not defined

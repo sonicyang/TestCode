@@ -1,4 +1,0 @@
-Traceback (most recent call last):
-  File "uploaded/python/0813146744054f3a20e75341bcdb6762", line 1, in <module>
-    Q_Q
-NameError: name 'Q_Q' is not defined
