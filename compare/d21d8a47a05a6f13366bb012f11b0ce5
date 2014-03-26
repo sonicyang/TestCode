@@ -1,0 +1,6 @@
+<class 'Xlib.protocol.request.QueryExtension'>
+<class 'Xlib.protocol.request.QueryExtension'>
+Traceback (most recent call last):
+  File "uploaded/python/ebe5e52e35c4d4c9ff58820c12647205", line 3, in <module>
+    sleep(3)
+NameError: name 'sleep' is not defined
